@@ -1,0 +1,47 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Электроника",
+      "description": "Электроприборы"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Фрукты",
+      "description": "Фрукты из других стран"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Игрушки",
+      "description": "Игрушки для детей"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Садовый инструмент",
+      "description": "Инструменты для сада и огорода"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Айфон",
+      "description": "Сотовый телефон от Apple",
+      "preview": "",
+      "category": 1,
+      "price_per_purchase": 0,
+      "created_at": "2024-04-02T18:49:25.424Z",
+      "updated_at": "2024-04-02T18:49:25.424Z"
+    }
+  }
+]
