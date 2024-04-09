@@ -4,7 +4,8 @@ from catalog.models import Product
 
 
 def index(request):
-    return render(request, 'catalog/index.html')
+    context = {'object_list': Product.objects.all()}
+    return render(request, 'catalog/index.html', context)
 
 
 def contacts(request):
