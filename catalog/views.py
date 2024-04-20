@@ -1,27 +1,59 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView, TemplateView
 
 from catalog.models import Product
 
 
-def index(request):
-    context = {'object_list': Product.objects.all(),
-               'title': 'Главная'}
-    return render(request, 'catalog/index.html', context)
-
-
-def contacts(request):
-    context = {'title': 'Контакты'}
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        message = request.POST.get('message')
-        print(f'{name} ({phone}): {message}')
-    return render(request, 'catalog/contacts.html', context)
-
-
-def product(request, pk):
-    context = {
-        'object': Product.objects.get(pk=pk),
-        'title': 'Товар'
+class ProductListView(ListView):
+    model = Product
+    template_name = 'catalog/index.html'
+    extra_context = {
+        'title': 'Главная'
     }
-    return render(request, 'catalog/product.html', context)
+
+
+# def index(request):
+#     context = {'object_list': Product.objects.all(),
+#                'title': 'Главная'}
+#     return render(request, 'catalog/index.html', context)
+
+
+class ContactsPageView(TemplateView):
+    template_name = 'catalog/contacts.html'
+    extra_context = {
+        'title': 'Контакты'
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            phone = request.POST.get('phone')
+            message = request.POST.get('message')
+            print(f'{name} ({phone}): {message}')
+        return render(request, 'catalog/contacts.html', context=self.extra_context)
+
+
+# def contacts(request):
+#     context = {'title': 'Контакты'}
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         phone = request.POST.get('phone')
+#         message = request.POST.get('message')
+#         print(f'{name} ({phone}): {message}')
+#     return render(request, 'catalog/contacts.html', context)
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product.html'
+    extra_context = {
+        'title': 'Описание продукта'
+    }
+
+
+# def product(request, pk):
+#     context = {
+#         'object': Product.objects.get(pk=pk),
+#         'title': 'Товар'
+#     }
+#     return render(request, 'catalog/product.html', context)
