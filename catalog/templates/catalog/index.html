@@ -16,10 +16,20 @@
                 <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                     {{ product.description|slice:100 }}
                 </ul>
+
+                {% if product.versions.exists %}
+                <p>Версия {{ product.name_version }}</p>
+                <p>Номер версии {{ product.number_version }}</p>
+                {% endif %}
+
+
                 <div class="btn-group">
-                    <a href="{% url 'catalog:product' product.pk %}" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                    <a href="{% url 'catalog:update_product' product.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
-                    <a href="{% url 'catalog:delete_product' product.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Delete</a>
+                    <a href="{% url 'catalog:product' product.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="{% url 'catalog:update_product' product.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'catalog:delete_product' product.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Delete</a>
                 </div>
             </div>
         </div>
