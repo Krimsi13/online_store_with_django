@@ -4,7 +4,7 @@ import string
 
 
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView
 
@@ -43,8 +43,34 @@ def email_verification(request, token):
     return redirect(reverse("users:login"))
 
 
-class ResetPassword(TemplateView):
-    def post(self, request):
+# class ResetPassword(TemplateView):
+#     def post(self, request):
+#         mail = request.POST.get('mail')
+#         user = get_object_or_404(User, email=mail)
+#
+#         letters = list(string.ascii_lowercase)
+#         new_password = ''
+#         for _ in range(5):
+#             new_password = new_password + random.choice(letters) + str(random.randint(1, 9))
+#
+#         user.set_password(new_password)
+#         user.save()
+#
+#         send_mail(
+#             subject="Новый пароль",
+#             message=f"Ваш новый пароль: {new_password}",
+#             from_email=EMAIL_HOST_USER,
+#             recipient_list=[user.email],
+#         )
+#
+#         return redirect("users:login")
+
+
+def reset_password(request):
+    if request.method == 'GET':
+        return render(request, 'users/reset_password.html')
+
+    if request.method == 'POST':
         mail = request.POST.get('mail')
         user = get_object_or_404(User, email=mail)
 
@@ -63,27 +89,4 @@ class ResetPassword(TemplateView):
             recipient_list=[user.email],
         )
 
-        return redirect("users:login")
-
-
-# def reset_password(request):
-#
-#     mail = request.POST.get('mail')
-#     user = get_object_or_404(User, email=mail)
-#
-#     letters = list(string.ascii_lowercase)
-#     new_password = ''
-#     for _ in range(5):
-#         new_password = new_password + random.choice(letters) + str(random.randint(1, 9))
-#
-#     user.set_password(new_password)
-#     user.save()
-#
-#     send_mail(
-#         subject="Новый пароль",
-#         message=f"Ваш новый пароль: {new_password}",
-#         from_email=EMAIL_HOST_USER,
-#         recipient_list=[user.email],
-#     )
-#
-#     return redirect(reverse("users:login"))
+        return redirect(reverse("users:login"))
