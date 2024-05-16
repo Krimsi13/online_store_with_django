@@ -30,12 +30,19 @@ class Product(models.Model):
     owner = models.ForeignKey(User, verbose_name="Владелец", help_text="Укажите владельца", **NULLABLE,
                               on_delete=models.SET_NULL)
 
+    is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
+
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+            ("can_edit_description_product", "Can edit description product"),
+            ("can_edit_category_product", "Can edit category product")
+        ]
 
 
 class Version(models.Model):
